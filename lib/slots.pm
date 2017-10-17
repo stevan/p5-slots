@@ -4,18 +4,23 @@ package slots;
 use strict;
 use warnings;
 
+use MOP         ();
+use Devel::Hook ();
+
 our $VERSION   = '0.01';
 our $AUTHORITY = 'cpan:STEVAN';
 
 sub import {
     shift;
-    my $class = caller(0);
+    my $meta  = MOP::Util::GET_META_FOR( caller(0) );
     my %slots = @_;
-    {
-        no strict   'refs';
-        no warnings 'once';
-        %{ $class.'::HAS' } = ((map %{$_.'::HAS'}, @{$class.'::ISA'}), %slots);
-    }
+
+    $meta->add_slot( $_, $slots{ $_ } )
+        foreach keys %slots;
+
+    Devel::Hook->push_UNITCHECK_hook(
+        sub { MOP::Util::INHERIT_SLOTS( $meta ) }
+    );
 }
 
 1;
@@ -66,6 +71,7 @@ arguments and assigns it to the C<%HAS> package variable of
 the calling class.
 
 This module will also detect superclasses and insure that
-slots are inherited correctly.
+slots are inherited correctly, this wil occur during the
+next available UNITCHECK phase.
 
 =cut
