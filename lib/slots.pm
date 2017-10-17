@@ -4,22 +4,21 @@ package slots;
 use strict;
 use warnings;
 
-use MOP         ();
-use Devel::Hook ();
+use MOP ();
 
 our $VERSION   = '0.01';
 our $AUTHORITY = 'cpan:STEVAN';
 
 sub import {
     shift;
-    my $meta  = MOP::Util::GET_META_FOR( caller(0) );
+    my $meta  = MOP::Util::get_meta( caller(0) );
     my %slots = @_;
 
-    $meta->add_slot( $_, $slots{ $_ } )
-        foreach keys %slots;
+    $meta->add_slot( $_, $slots{ $_ } ) for keys %slots;
 
-    Devel::Hook->push_UNITCHECK_hook(
-        sub { MOP::Util::INHERIT_SLOTS( $meta ) }
+    MOP::Util::defer_until_UNITCHECK(
+        $meta,
+        \&MOP::Util::inherit_slots
     );
 }
 
