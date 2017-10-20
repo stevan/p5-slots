@@ -11,15 +11,15 @@ our $AUTHORITY = 'cpan:STEVAN';
 
 sub import {
     shift;
-    my $meta  = MOP::Util::get_meta( caller(0) );
+    my $pkg   = caller(0);
+    my $meta  = MOP::Util::get_meta( $pkg );
     my %slots = @_;
 
     $meta->add_slot( $_, $slots{ $_ } ) for keys %slots;
 
-    MOP::Util::defer_until_UNITCHECK(
-        $meta,
-        \&MOP::Util::inherit_slots
-    );
+    MOP::Util::defer_until_UNITCHECK(sub {
+        MOP::Util::inherit_slots( MOP::Util::get_meta( $pkg ) )
+    });
 }
 
 1;

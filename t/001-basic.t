@@ -22,7 +22,9 @@ TODO:
     package Point;
     use strict;
     use warnings;
+
     use parent 'UNIVERSAL::Object';
+
     use slots (
         x => sub { 0 },
         y => sub { 0 }
@@ -58,7 +60,9 @@ TODO:
     package Point3D;
     use strict;
     use warnings;
+
     use parent -norequire, 'Point';
+
     use slots z => sub { 0 };
 
     sub z { $_[0]->{z} }
