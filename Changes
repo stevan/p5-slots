@@ -1,6 +1,6 @@
 Revision history for Perl extension slots
 
-0.02
+0.02 2018-01-31
     - Switch the internals to just use the MOP
       APIs for everything, silly not to.
 
