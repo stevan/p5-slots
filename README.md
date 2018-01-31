@@ -3,6 +3,7 @@
 A simple pragma for managing class slots.
 
 [![CPAN version](https://badge.fury.io/pl/slots.svg)](https://metacpan.org/pod/slots)
+[![Build Status](https://travis-ci.org/stevan/p5-slots.svg?branch=master)](https://travis-ci.org/stevan/p5-slots)
 
 # Copyright and License
 
