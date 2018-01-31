@@ -3,9 +3,6 @@ Revision history for Perl extension slots
 0.02
     - Switch the internals to just use the MOP
       APIs for everything, silly not to.
-    - resolved some of the permissions issues
-      around this module, it should be official
-      now
 
 0.01 2017-10-16
     - initial release
