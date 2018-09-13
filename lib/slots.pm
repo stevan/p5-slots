@@ -69,8 +69,13 @@ This is a very simple pragma which takes a set of key/value
 arguments and assigns it to the C<%HAS> package variable of
 the calling class.
 
+=head2 Inheriting slots
+
 This module will also detect superclasses and insure that
 slots are inherited correctly, this wil occur during the
 next available UNITCHECK phase.
+
+Even if you are not adding any new slots, you will need to
+use this module so that slot inheritance occurs.
 
 =cut
